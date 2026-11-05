@@ -7,3 +7,4 @@
 `define REGISTERS (1 << `REG_ADDR_SIZE)
 
 `define reg_reg_op 0110011
+`define reg_imm_alu_op 0010011
