@@ -5,7 +5,7 @@ module risc_v(
     reg [`INST_ADDR_SIZE-1:0] inst_addr;
     wire [`INST_SIZE-1:0] instruction;
     wire [`INST_ADDR_SIZE-1:0] inst_addr_o;
-    reg wE;
+    reg wE_REG;
     reg [`REG_ADDR_SIZE-1:0] waddr;
     reg [`REG_SIZE-1: 0] wData;
     reg [`REG_ADDR_SIZE-1:0] raddr_1;
@@ -19,9 +19,20 @@ module risc_v(
     wire [`REG_SIZE-1:0] alu_out;
 
 
+    reg wE_MEM;
+    reg [`MEM_ADDR_SIZE-1:0] raddr_mem;
+    reg [`MEM_ADDR_SIZE-1:0] waddr_mem;
+    reg [`MEM_WORD_SIZE-1:0] mem_in;
+    wire [`MEM_WORD_SIZE-1:0] mem_out;
+    wire [2:0] mem_in_type;
+
+    
+
+
     pc pc1(.clk(clk),.inst_addr_in(inst_addr), .inst_addr_out(inst_addr_o));
     inst_mem inst_mem1(.inst_addr(inst_addr_o), .inst_out(instruction)); 
-    regfile reg1(.clk(clk), .wE(wE), .waddr(waddr), .wData(wData), .raddr_1(raddr_1), .raddr_2(raddr_2), .addr_1(regout_1), .addr_2(regout_2));
+    regfile reg1(.clk(clk), .wE_REG(wE_REG), .waddr(waddr), .wData(wData), .raddr_1(raddr_1), .raddr_2(raddr_2), .addr_1(regout_1), .addr_2(regout_2));
+    main_memory mem(.wE(wE_MEM),.w_type(mem_in_type), .clk(clk), .raddr(raddr_mem), .waddr(waddr_mem), .data_in(mem_in), .data_out(mem_out));
 
     alu alu1(.alu_sel(alu_sel), .in1(aluin_1), .in2(aluin_2), .oData(alu_out));
 
@@ -34,7 +45,7 @@ module risc_v(
         case (instruction[6:0])
         7'b`reg_reg_op:
             begin
-                wE = 1;
+                wE_REG = 1;
                 alu_sel = {instruction[30], instruction[14:12]};
                 raddr_2 = instruction[24:20];
                 raddr_1 = instruction[19:15];
@@ -45,7 +56,7 @@ module risc_v(
             end
         7'b`reg_imm_alu_op:
             begin
-                wE = 1;
+                wE_REG = 1;
                 alu_sel = (instruction[14:12] == 3'b101 )? {instruction[30], instruction[14:12]}: {1'b0, instruction[14:12]} ;          
                 raddr_1 = instruction[19:15];
                 waddr = instruction[11:7];
@@ -54,12 +65,66 @@ module risc_v(
                 wData = alu_out;
             end
 
+        7'b`load_op:
+
+            begin
+                
+                alu_sel = 4'd0;
+                raddr_1 = instruction[19:15];
+                aluin_1 = regout_1; 
+                aluin_2 = $signed(instruction[31:20]);
+                raddr_mem = alu_out;
+                waddr = instruction[11:7];
+                case(instruction[14:12])
+                3'd0: begin   
+                        wE_REG = 1;                   
+                        wData = $signed(mem_out[7:0]);
+                    end
+                3'd1: begin
+                        wE_REG = 1;
+                        wData = $signed(mem_out[15:0]);
+                    end
+                3'd2: begin
+                        wE_REG = 1;
+                        wData = mem_out;
+                    end
+                3'd4: begin
+                        wE_REG = 1;
+                        wData = $unsigned(mem_out[7:0]);
+                    end
+                3'd5: begin
+                        wE_REG = 1;
+                        wData = $unsigned(mem_out[15:0]);
+                    end
+                default : 
+                begin
+                        wE_REG = 0;
+                        wData = 0;
+                    end
+                endcase
+            end
+        
+        7'b`store_op:
+            begin
+                alu_sel = 4'd0;
+                raddr_1 = instruction[19:15];
+                raddr_2 = instruction[24:20];
+                aluin_1 = regout_1; 
+                aluin_2 = $signed(instruction[31:20]);
+                mem_in = regout_2;
+                wE_MEM =1;
+                waddr_mem = alu_out;
+                mem_in_type = instruction[14:12];              
+
+            end
+
         default:
         
             begin
-                wE = 0;
+                wE_REG = 0;
                 wData = 0;
             end
+
         
         endcase
     end

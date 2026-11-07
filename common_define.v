@@ -8,3 +8,10 @@
 
 `define reg_reg_op 0110011
 `define reg_imm_alu_op 0010011
+`define load_op  0000011
+`define store_op 0100011
+
+`define MEM_WORD_SIZE 32
+`define MEM_ADDR_SIZE 32
+`define MEMS (1 << `MEM_ADDR_SIZE)
+
