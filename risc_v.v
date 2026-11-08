@@ -17,6 +17,8 @@ module risc_v(
     reg [`REG_SIZE-1: 0] aluin_1;
     reg [`REG_SIZE-1: 0] aluin_2;  
     wire [`REG_SIZE-1:0] alu_out;
+    reg [12:1]  branch_offset;
+    reg [19:0] jal_offset;
 
 
     reg wE_MEM;
@@ -24,20 +26,84 @@ module risc_v(
     reg [`MEM_ADDR_SIZE-1:0] waddr_mem;
     reg [`MEM_WORD_SIZE-1:0] mem_in;
     wire [`MEM_WORD_SIZE-1:0] mem_out;
-    wire [2:0] mem_in_type;
+    reg [2:0] mem_in_type;
 
     
 
 
     pc pc1(.clk(clk),.inst_addr_in(inst_addr), .inst_addr_out(inst_addr_o));
     inst_mem inst_mem1(.inst_addr(inst_addr_o), .inst_out(instruction)); 
-    regfile reg1(.clk(clk), .wE_REG(wE_REG), .waddr(waddr), .wData(wData), .raddr_1(raddr_1), .raddr_2(raddr_2), .addr_1(regout_1), .addr_2(regout_2));
+    regfile reg1(.clk(clk), .wE(wE_REG), .waddr(waddr), .wData(wData), .raddr_1(raddr_1), .raddr_2(raddr_2), .addr_1(regout_1), .addr_2(regout_2));
     main_memory mem(.wE(wE_MEM),.w_type(mem_in_type), .clk(clk), .raddr(raddr_mem), .waddr(waddr_mem), .data_in(mem_in), .data_out(mem_out));
 
     alu alu1(.alu_sel(alu_sel), .in1(aluin_1), .in2(aluin_2), .oData(alu_out));
 
     always @(inst_addr_o)
-        inst_addr <= inst_addr_o + 1;
+    begin
+        if (instruction[6:0] == `branch_op)
+        begin
+            wE_MEM = 0;
+            mem_in = 0;
+            branch_offset = {instruction[31],instruction[7], instruction[30:25],instruction[11:8]};
+            raddr_2 = instruction[24:20];
+            raddr_1 = instruction[19:15];
+            case (instruction[14:12])
+                3'd0: 
+                begin 
+                    if(regout_1 == regout_2) inst_addr <= inst_addr_o +branch_offset;
+                    else inst_addr <= inst_addr_o +1;
+                end
+                3'd1: 
+                begin 
+                    if(regout_1 != regout_2) inst_addr <= inst_addr_o +branch_offset;
+                    else inst_addr <= inst_addr_o +1;
+                end
+                3'd4: 
+                begin 
+                    if($signed(regout_1) < $signed(regout_2)) inst_addr <= inst_addr_o +branch_offset;
+                    else inst_addr <= inst_addr_o +1;
+                end
+                3'd5: 
+                begin 
+                    if($signed(regout_1) >= $signed(regout_2)) inst_addr <= inst_addr_o +branch_offset;
+                    else inst_addr <= inst_addr_o +1;
+                end
+                3'd6: 
+                begin 
+                    if($unsigned(regout_1) < $unsigned(regout_2)) inst_addr <= inst_addr_o +branch_offset;
+                    else inst_addr <= inst_addr_o +1;
+                end
+                3'd7: 
+                begin 
+                    if($unsigned(regout_1) >= $unsigned(regout_2)) inst_addr <= inst_addr_o +branch_offset;
+                    else inst_addr <= inst_addr_o +1;
+                end
+                default:
+                begin
+                    inst_addr <= inst_addr_o +1;
+                end
+            endcase
+        end
+        else if (instruction[6:0] == `JAL_op)
+            begin
+                jal_offset = {instruction[31], instruction[19:12], instruction[20], instruction[30:21]};
+
+                wE_REG = 1;
+                waddr = instruction[11:7];
+                wData = inst_addr_o + 4;
+                inst_addr = inst_addr_o + $signed(jal_offset);
+            end
+        else if (instruction[6:0] == `JALR_op)
+            begin
+                raddr_1 = instruction[19:15];
+                wE_REG = 1;
+                waddr = instruction[11:7];
+                wData = inst_addr_o + 4;
+                inst_addr = regout_1 + $signed(instruction[31:20]); 
+            end
+        else
+        inst_addr <= inst_addr_o + 4;
+    end
 
     always @(*)
     begin
@@ -45,6 +111,8 @@ module risc_v(
         case (instruction[6:0])
         7'b`reg_reg_op:
             begin
+                wE_MEM = 0;
+                mem_in = 0;
                 wE_REG = 1;
                 alu_sel = {instruction[30], instruction[14:12]};
                 raddr_2 = instruction[24:20];
@@ -56,6 +124,8 @@ module risc_v(
             end
         7'b`reg_imm_alu_op:
             begin
+                wE_MEM = 0;
+                mem_in = 0;
                 wE_REG = 1;
                 alu_sel = (instruction[14:12] == 3'b101 )? {instruction[30], instruction[14:12]}: {1'b0, instruction[14:12]} ;          
                 raddr_1 = instruction[19:15];
@@ -68,7 +138,8 @@ module risc_v(
         7'b`load_op:
 
             begin
-                
+                wE_MEM = 0;
+                mem_in = 0;
                 alu_sel = 4'd0;
                 raddr_1 = instruction[19:15];
                 aluin_1 = regout_1; 
@@ -117,12 +188,32 @@ module risc_v(
                 mem_in_type = instruction[14:12];              
 
             end
+        
+        7'b`LUI_op:
+        begin
+            wE_REG = 1;
+            waddr = instruction[11:7];
+            wData = {instruction[31:12], 12'b0};
+        end
+
+        7'b`AUIPIC_op:
+        begin
+            wE_REG = 1;
+            waddr = instruction[11:7];
+            wData = {instruction[31:12], 12'b0} + inst_addr_o;
+        end
+
+
+
 
         default:
         
             begin
+                wE_MEM =0;
                 wE_REG = 0;
                 wData = 0;
+                mem_in = 0;
+
             end
 
         
