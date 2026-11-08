@@ -1,0 +1,31 @@
+[*]
+[*] GTKWave Analyzer v3.3.128 (w)1999-2026 BSI
+[*] Sun Nov  8 17:50:40 2026
+[*]
+[dumpfile] "C:\Users\tulad\study\risc-v\tb_.vcd"
+[dumpfile_mtime] "Sun Nov  8 17:49:10 2026"
+[dumpfile_size] 13417
+[savefile] "C:\Users\tulad\study\risc-v\test.gtkw"
+[timestart] 236
+[size] 1920 985
+[pos] -261 -258
+*-4.217073 23 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb_.
+[treeopen] tb_.rs1.
+[sst_width] 246
+[signals_width] 182
+[sst_expanded] 1
+[sst_vpaned_height] 539
+@28
+tb_.rs1.clk
+@22
+tb_.rs1.instruction[31:0]
+tb_.rs1.inst_addr_o[15:0]
+tb_.rs1.regout_1[31:0]
+tb_.rs1.regout_2[31:0]
+tb_.rs1.raddr_1[4:0]
+tb_.rs1.raddr_2[4:0]
+@23
+tb_.rs1.branch_offset[12:0]
+[pattern_trace] 1
+[pattern_trace] 0
