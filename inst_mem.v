@@ -14,7 +14,7 @@ module inst_mem(
     
     initial begin
         $readmemb("instructions.hex", memory);
-        $monitor("%h %h", inst_addr, inst_out);
+        // $monitor("%h %h", inst_addr, inst_out);
     end
 
 

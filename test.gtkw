@@ -1,31 +1,70 @@
 [*]
 [*] GTKWave Analyzer v3.3.128 (w)1999-2026 BSI
-[*] Sun Nov  8 17:50:40 2026
+[*] Mon Nov  9 05:30:33 2026
 [*]
 [dumpfile] "C:\Users\tulad\study\risc-v\tb_.vcd"
-[dumpfile_mtime] "Sun Nov  8 17:49:10 2026"
-[dumpfile_size] 13417
+[dumpfile_mtime] "Mon Nov  9 05:22:00 2026"
+[dumpfile_size] 3720
 [savefile] "C:\Users\tulad\study\risc-v\test.gtkw"
-[timestart] 236
+[timestart] 0
 [size] 1920 985
 [pos] -261 -258
-*-4.217073 23 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-3.058894 7 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] tb_.
 [treeopen] tb_.rs1.
 [sst_width] 246
 [signals_width] 182
 [sst_expanded] 1
-[sst_vpaned_height] 539
+[sst_vpaned_height] 634
 @28
 tb_.rs1.clk
 @22
-tb_.rs1.instruction[31:0]
+[color] 5
 tb_.rs1.inst_addr_o[15:0]
-tb_.rs1.regout_1[31:0]
-tb_.rs1.regout_2[31:0]
-tb_.rs1.raddr_1[4:0]
-tb_.rs1.raddr_2[4:0]
-@23
+[color] 5
+tb_.rs1.instruction[31:0]
+@200
+-
+@22
+tb_.rs1.jal_offset[19:0]
+[color] 1
 tb_.rs1.branch_offset[12:0]
+@200
+-
+@22
+[color] 4
+tb_.rs1.raddr_1[4:0]
+[color] 4
+tb_.rs1.raddr_2[4:0]
+[color] 4
+tb_.rs1.regout_1[31:0]
+[color] 4
+tb_.rs1.regout_2[31:0]
+[color] 4
+tb_.rs1.waddr[4:0]
+@28
+tb_.rs1.wE_REG
+@22
+[color] 4
+tb_.rs1.wData[31:0]
+@200
+-
+@22
+[color] 2
+tb_.rs1.aluin_2[31:0]
+[color] 2
+tb_.rs1.aluin_1[31:0]
+[color] 2
+tb_.rs1.alu_out[31:0]
+@200
+-
+@22
+tb_.rs1.raddr_mem[31:0]
+tb_.rs1.mem_out[31:0]
+@28
+tb_.rs1.mem_in_type[2:0]
+tb_.rs1.wE_MEM
+@22
+tb_.rs1.waddr_mem[31:0]
 [pattern_trace] 1
 [pattern_trace] 0

@@ -17,8 +17,10 @@ module risc_v(
     reg [`REG_SIZE-1: 0] aluin_1;
     reg [`REG_SIZE-1: 0] aluin_2;  
     wire [`REG_SIZE-1:0] alu_out;
-    reg [12:0]  branch_offset;
-    reg [19:0] jal_offset;
+
+    reg [`REG_SIZE-1:0] extended_immediate;
+    reg [`INST_ADDR_SIZE-1:0]  branch_offset;
+    reg [`INST_ADDR_SIZE-1:0] jal_offset;
 
 
     reg wE_MEM;
@@ -27,6 +29,8 @@ module risc_v(
     reg [`MEM_WORD_SIZE-1:0] mem_in;
     wire [`MEM_WORD_SIZE-1:0] mem_out;
     reg [2:0] mem_in_type;
+
+    
 
     
 
@@ -40,40 +44,39 @@ module risc_v(
 
     always @(*)
     begin
+        
         if (instruction[6:0] == 7'b`branch_op)
         begin
             
             case (instruction[14:12])
                 3'd0: 
                 begin 
-                     $display("%h %h %h ", inst_addr_o, regout_1, regout_2);
-                    if(regout_1 == regout_2) 
-                    begin inst_addr <= inst_addr_o +branch_offset;end
+                    if(regout_1 == regout_2) inst_addr <= inst_addr_o + branch_offset;
                     else inst_addr <= inst_addr_o +4;
                 end
                 3'd1: 
                 begin 
-                    if(regout_1 != regout_2) inst_addr <= inst_addr_o +branch_offset;
+                    if(regout_1 != regout_2) inst_addr <= inst_addr_o + branch_offset;
                     else inst_addr <= inst_addr_o +4;
                 end
                 3'd4: 
                 begin 
-                    if($signed(regout_1) < $signed(regout_2)) inst_addr <= inst_addr_o +branch_offset;
+                    if($signed(regout_1) < $signed(regout_2)) inst_addr <= inst_addr_o + branch_offset;
                     else inst_addr <= inst_addr_o +4;
                 end
                 3'd5: 
                 begin 
-                    if($signed(regout_1) >= $signed(regout_2)) inst_addr <= inst_addr_o +branch_offset;
+                    if($signed(regout_1) >= $signed(regout_2)) inst_addr <= inst_addr_o + branch_offset;
                     else inst_addr <= inst_addr_o +4;
                 end
                 3'd6: 
                 begin 
-                    if($unsigned(regout_1) < $unsigned(regout_2)) inst_addr <= inst_addr_o +branch_offset;
+                    if($unsigned(regout_1) < $unsigned(regout_2)) inst_addr <= inst_addr_o + branch_offset;
                     else inst_addr <= inst_addr_o +4;
                 end
                 3'd7: 
                 begin 
-                    if($unsigned(regout_1) >= $unsigned(regout_2)) inst_addr <= inst_addr_o +branch_offset;
+                    if($unsigned(regout_1) >= $unsigned(regout_2)) inst_addr <= inst_addr_o + branch_offset;
                     else inst_addr <= inst_addr_o +4;
                 end
                 default:
@@ -84,17 +87,13 @@ module risc_v(
         end
         else if (instruction[6:0] == 7'b`JAL_op)
             begin
-                wE_REG = 1;
-                waddr = instruction[11:7];
-                wData = inst_addr_o + 4;
-                inst_addr = inst_addr_o + $signed(jal_offset);
+                
+                inst_addr <= inst_addr_o + $signed(jal_offset);
             end
-        else if (instruction[6:0] == `JALR_op)
+        else if (instruction[6:0] ==7'b`JALR_op)
             begin
-                wE_REG = 1;
-                waddr = instruction[11:7];
-                wData = inst_addr_o + 4;
-                inst_addr = regout_1 + $signed(instruction[31:20]); 
+                
+                inst_addr <= (regout_1 + $signed(extended_immediate))&~1; 
             end
         else
         begin
@@ -178,8 +177,9 @@ module risc_v(
                 raddr_1 = instruction[19:15];
                 raddr_2 = instruction[24:20];
                 aluin_1 = regout_1; 
-                aluin_2 = $signed(instruction[31:20]);
+                aluin_2 = $signed({instruction[31:25], instruction[11:7]});
                 mem_in = regout_2;
+                
                 wE_MEM =1;
                 waddr_mem = alu_out;
                 mem_in_type = instruction[14:12];              
@@ -197,33 +197,51 @@ module risc_v(
         begin
             wE_REG = 1;
             waddr = instruction[11:7];
-            wData = {instruction[31:12], 12'b0} + inst_addr_o;
+            wData = (instruction[31:20] << 12) + inst_addr_o;
         end
 
         7'b`branch_op:
         begin
-            branch_offset = {instruction[31], instruction[7],instruction[30:25],instruction[11:8],1'b0};
+            branch_offset = $signed({instruction[31], instruction[7],instruction[30:25],instruction[11:8],1'b0});
             raddr_2 = instruction[24:20];
             raddr_1 = instruction[19:15];
         end
 
         7'b`JAL_op:
         begin
-            jal_offset = {instruction[31], instruction[19:12], instruction[20], instruction[30:21]};
+            wE_REG = 1;
+                waddr = instruction[11:7];
+                wData = inst_addr_o + 4;
+            jal_offset = $signed({instruction[31], instruction[19:12], instruction[20], instruction[30:21], 1'b0});
         end
-
+        
+        7'b`JALR_op:
+        begin
+            raddr_1 = instruction[19:15];
+            wE_REG = 1;
+            waddr = instruction[11:7];
+            wData = inst_addr_o + 4;
+            extended_immediate = $signed(instruction[31:20]);
+        end
 
 
         default:
         
             begin
-                wE_MEM =0;
-                wE_REG = 0;
-                wData = 0;
-                mem_in = 0;
-                raddr_1 =0 ;
-                raddr_2 =0;
-
+                wE_MEM ='bz;
+                wE_REG = 'bz;
+                wData = 'bz;
+                mem_in = 'bz;
+                raddr_1 ='bz;
+                raddr_2 ='bz;
+                branch_offset = 'bz;
+                jal_offset = 'bz;
+                extended_immediate = 'bz;
+                mem_in ='bz;
+                mem_in_type = 'bz;
+                raddr_mem ='bz;
+                waddr_mem =  'bz;
+                waddr = 'bz;
             end
 
         

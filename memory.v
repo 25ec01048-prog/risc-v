@@ -12,7 +12,7 @@ module main_memory(
     reg [7:0] mem  [0: `MEMS-1];
 
     assign data_out =  {mem[raddr+2'd3] , mem[raddr+2'd2],mem[raddr+2'd1],mem[raddr+2'd0]};
-    always @(posedge clk)
+    always @(negedge clk)
         case (w_type)
             3'd0:{mem[waddr+2'd0]} <= wE? data_in[7:0]:  {mem[waddr+2'd0]};
             3'd1:{mem[waddr+2'd1],mem[waddr+2'd0]} <= wE? data_in[15:0]:  {mem[waddr+2'd1],mem[waddr+2'd0]};

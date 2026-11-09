@@ -20,7 +20,7 @@ module regfile (
     assign rout_1 = registers[raddr_1];
     assign rout_2 = registers[raddr_2];
 
-    always @(posedge clk) 
+    always @(negedge clk) 
     if (wE) registers[waddr] <= wData;
     
 endmodule

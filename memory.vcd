@@ -1,0 +1,147 @@
+$date
+	Mon Nov  9 12:59:52 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_memory $end
+$var wire 12 ! data_out [11:0] $end
+$var reg 1 " clk $end
+$var reg 12 # data_in [11:0] $end
+$var reg 32 $ raddr [31:0] $end
+$var reg 1 % wE $end
+$var reg 3 & w_type [2:0] $end
+$var reg 32 ' waddr [31:0] $end
+$var integer 32 ( failed [31:0] $end
+$var integer 32 ) passed [31:0] $end
+$scope module dut $end
+$var wire 1 " clk $end
+$var wire 12 * data_in [11:0] $end
+$var wire 32 + raddr [31:0] $end
+$var wire 1 % wE $end
+$var wire 3 , w_type [2:0] $end
+$var wire 32 - waddr [31:0] $end
+$var wire 12 . data_out [11:0] $end
+$upscope $end
+$scope begin $ivl_for_loop0 $end
+$var integer 32 / i [31:0] $end
+$upscope $end
+$scope task check_read $end
+$var reg 32 0 expected [31:0] $end
+$var reg 200 1 test_name [200:1] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+bx 1
+bx 0
+b100000 /
+b0 .
+b0 -
+b0 ,
+b0 +
+b0 *
+b0 )
+b0 (
+b0 '
+b0 &
+0%
+b0 $
+b0 #
+0"
+b0 !
+$end
+#5000
+1"
+#10000
+b11001111000 #
+b11001111000 *
+b100 '
+b100 -
+b10 &
+b10 ,
+1%
+0"
+#15000
+1"
+#16000
+b1010011010101110010000001101100011010010111010001110100011011000110010100100000011001010110111001100100011010010110000101101110 1
+b10010001101000101011001111000 0
+b100 $
+b100 +
+0%
+#18000
+b1 (
+#20000
+b110011011101 #
+b110011011101 *
+b1000 '
+b1000 -
+b0 &
+b0 ,
+1%
+0"
+#25000
+1"
+#26000
+b11011101 !
+b11011101 .
+b101001101000010 1
+b11011101 0
+b1000 $
+b1000 +
+0%
+#28000
+b1 )
+#30000
+b101111001101 #
+b101111001101 *
+b1100 '
+b1100 -
+b1 &
+b1 ,
+1%
+0"
+#35000
+1"
+#36000
+b101111001101 !
+b101111001101 .
+b101001101001000 1
+b1010101111001101 0
+b1100 $
+b1100 +
+0%
+#38000
+b10 (
+#40000
+b11 (
+0"
+#45000
+1"
+#50000
+b111111111111 #
+b111111111111 *
+b100 '
+b100 -
+b10 &
+b10 ,
+0"
+#55000
+1"
+#56000
+b0 !
+b0 .
+b101011101110010011010010111010001100101001000000110010001101001011100110110000101100010011011000110010101100100 1
+b10010001101000101011001111000 0
+b100 $
+b100 +
+#58000
+b100 (

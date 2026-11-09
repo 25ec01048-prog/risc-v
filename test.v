@@ -14,7 +14,7 @@ module tb_;
 
     initial begin
         clk = 0;
-        #500 $finish();
+        #100 $finish();
     end
 
 endmodule

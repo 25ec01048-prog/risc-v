@@ -1,4 +1,4 @@
-`define INST_ADDR_SIZE 16
+`define INST_ADDR_SIZE 24
 `define INST_SIZE 32
 `define INST_MEM_SIZE (1 << (`INST_ADDR_SIZE))
 
@@ -17,6 +17,6 @@
 `define JALR_op 1100111
 
 `define MEM_WORD_SIZE 32
-`define MEM_ADDR_SIZE 32
-`define MEMS (1 << `MEM_ADDR_SIZE)
+`define MEM_ADDR_SIZE 12
+`define MEMS 4096
 
