@@ -52,43 +52,43 @@ module risc_v(
         
         if (instruction[6:0] == 7'b`branch_op)
         begin
-            
-            case (instruction[14:12])
-                3'd0: 
-                begin 
-                    if(regout_1 == regout_2) inst_addr <= inst_addr_o + branch_offset;
+             if (alu_out) inst_addr <= inst_addr_o + branch_offset;
                     else inst_addr <= inst_addr_o +4;
-                end
-                3'd1: 
-                begin 
-                    if(regout_1 != regout_2) inst_addr <= inst_addr_o + branch_offset;
-                    else inst_addr <= inst_addr_o +4;
-                end
-                3'd4: 
-                begin 
-                    if($signed(regout_1) < $signed(regout_2)) inst_addr <= inst_addr_o + branch_offset;
-                    else inst_addr <= inst_addr_o +4;
-                end
-                3'd5: 
-                begin 
-                    if($signed(regout_1) >= $signed(regout_2)) inst_addr <= inst_addr_o + branch_offset;
-                    else inst_addr <= inst_addr_o +4;
-                end
-                3'd6: 
-                begin 
-                    if($unsigned(regout_1) < $unsigned(regout_2)) inst_addr <= inst_addr_o + branch_offset;
-                    else inst_addr <= inst_addr_o +4;
-                end
-                3'd7: 
-                begin 
-                    if($unsigned(regout_1) >= $unsigned(regout_2)) inst_addr <= inst_addr_o + branch_offset;
-                    else inst_addr <= inst_addr_o +4;
-                end
-                default:
-                begin
-                    inst_addr <= inst_addr_o +4;
-                end
-            endcase
+            // case (instruction[14:12])
+            //     3'd0: 
+            //     begin 
+            //         if(regout_1 == regout_2)
+            //     end
+            //     3'd1: 
+            //     begin 
+            //         if(regout_1 != regout_2) inst_addr <= inst_addr_o + branch_offset;
+            //         else inst_addr <= inst_addr_o +4;
+            //     end
+            //     3'd4: 
+            //     begin 
+            //         if($signed(regout_1) < $signed(regout_2)) inst_addr <= inst_addr_o + branch_offset;
+            //         else inst_addr <= inst_addr_o +4;
+            //     end
+            //     3'd5: 
+            //     begin 
+            //         if($signed(regout_1) >= $signed(regout_2)) inst_addr <= inst_addr_o + branch_offset;
+            //         else inst_addr <= inst_addr_o +4;
+            //     end
+            //     3'd6: 
+            //     begin 
+            //         if($unsigned(regout_1) < $unsigned(regout_2)) inst_addr <= inst_addr_o + branch_offset;
+            //         else inst_addr <= inst_addr_o +4;
+            //     end
+            //     3'd7: 
+            //     begin 
+            //         if($unsigned(regout_1) >= $unsigned(regout_2)) inst_addr <= inst_addr_o + branch_offset;
+            //         else inst_addr <= inst_addr_o +4;
+            //     end
+            //     default:
+            //     begin
+            //         inst_addr <= inst_addr_o +4;
+            //     end
+            // endcase
         end
         else if (instruction[6:0] == 7'b`JAL_op)
             begin
@@ -210,6 +210,18 @@ module risc_v(
             branch_offset = $signed({instruction[31], instruction[7],instruction[30:25],instruction[11:8],1'b0});
             raddr_2 = instruction[24:20];
             raddr_1 = instruction[19:15];
+            aluin_1 = regout_1;
+            aluin_2 = regout_2;
+            case (instruction[14:12])
+                3'd0: alu_sel = 4'b1001; // beq
+                3'd1: alu_sel = 4'b1111; // bneq
+                3'd4: alu_sel = 4'b0010; // bl
+                3'd5: alu_sel = 4'b1110; // bg
+                3'd6: alu_sel = 4'b0011; // blu
+                3'd7: alu_sel = 4'b1010; // bgu
+            
+            endcase
+
         end
 
         7'b`JAL_op:

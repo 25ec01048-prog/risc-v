@@ -19,6 +19,15 @@ module alu (
             4'b1101: oData =   $signed(in1) >>> in2;
             4'b0110: oData = in1 | in2;
             4'b0111: oData = in1 & in2;
+
+            // added extra
+            4'b1001: oData = in1 == in2;
+            4'b1111: oData = in1 != in2;
+            4'b1110: oData = ($signed(in1) >= $signed(in2));
+            4'b1010: oData = ($unsigned(in1) >= $unsigned(in2));
+
+
+
             default: oData = 32'd0;
         endcase
 
