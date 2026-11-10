@@ -2,11 +2,17 @@
 
 module tb_;
     reg clk;
-    
-    risc_v rs1(.clk(clk));
+    wire [6:0] opCode;
+    reg [`REG_ADDR_SIZE-1:0] userin = 5'd29;
+    wire [5: 0] userout;
+    risc_v rs1(.clk(clk), .opCode(opCode),.userin(userin), .userout(userout));
     localparam CLK_PERIOD = 10;
 
-    always  #(CLK_PERIOD/2) clk=~clk;
+    always   begin 
+        #(CLK_PERIOD/2)
+        clk=~clk;
+        userin = userin+1; 
+        end
     initial begin
         $dumpfile("tb_.vcd");
         $dumpvars(0, tb_);
@@ -14,7 +20,7 @@ module tb_;
 
     initial begin
         clk = 0;
-        #100 $finish();
+        #500 $finish();
     end
 
 endmodule

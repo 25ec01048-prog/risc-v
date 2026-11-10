@@ -1,6 +1,9 @@
 
 module risc_v(
-    input clk
+    input clk,
+    output [6:0] opCode,
+    input [`REG_ADDR_SIZE-1:0] userin,
+    output [5: 0] userout
 );
     reg [`INST_ADDR_SIZE-1:0] inst_addr;
     wire [`INST_SIZE-1:0] instruction;
@@ -30,6 +33,7 @@ module risc_v(
     wire [`MEM_WORD_SIZE-1:0] mem_out;
     reg [2:0] mem_in_type;
 
+    wire [`REG_SIZE-1:0] uout;
     
 
     
@@ -37,11 +41,12 @@ module risc_v(
 
     pc pc1(.clk(clk),.inst_addr_in(inst_addr), .inst_addr_out(inst_addr_o));
     inst_mem inst_mem1(.inst_addr(inst_addr_o), .inst_out(instruction)); 
-    regfile reg1(.clk(clk), .wE(wE_REG), .waddr(waddr), .wData(wData), .raddr_1(raddr_1), .raddr_2(raddr_2), .rout_1(regout_1), .rout_2(regout_2));
+    regfile reg1(.clk(clk), .wE(wE_REG), .waddr(waddr), .wData(wData), .raddr_1(raddr_1), .raddr_2(raddr_2), .rout_1(regout_1), .rout_2(regout_2), .userin(userin), .userout(uout));
     main_memory mem(.wE(wE_MEM),.w_type(mem_in_type), .clk(clk), .raddr(raddr_mem), .waddr(waddr_mem), .data_in(mem_in), .data_out(mem_out));
 
     alu alu1(.alu_sel(alu_sel), .in1(aluin_1), .in2(aluin_2), .oData(alu_out));
-
+    assign opCode[6:0] = instruction[6:0];
+    assign userout[5:0] = uout[5:0];
     always @(*)
     begin
         
@@ -88,12 +93,12 @@ module risc_v(
         else if (instruction[6:0] == 7'b`JAL_op)
             begin
                 
-                inst_addr <= inst_addr_o + $signed(jal_offset);
+                inst_addr <= inst_addr_o + jal_offset;
             end
         else if (instruction[6:0] ==7'b`JALR_op)
             begin
                 
-                inst_addr <= (regout_1 + $signed(extended_immediate))&~1; 
+                inst_addr <= (regout_1 + (extended_immediate))&~1; 
             end
         else
         begin

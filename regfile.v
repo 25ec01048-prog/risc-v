@@ -1,12 +1,15 @@
 module regfile (
     input clk,
     input wE,
+    
     input [`REG_ADDR_SIZE-1:0] waddr,
     input [`REG_SIZE-1: 0] wData,
     input [`REG_ADDR_SIZE-1:0] raddr_1,
     input [`REG_ADDR_SIZE-1:0] raddr_2,
     output [`REG_SIZE-1: 0] rout_1,
-    output [`REG_SIZE-1: 0] rout_2
+    output [`REG_SIZE-1: 0] rout_2,
+    input [`REG_ADDR_SIZE-1:0] userin,
+    output [`REG_SIZE-1: 0] userout
 );
     reg [`REG_SIZE-1:0] registers [0:`REGISTERS-1];
     initial
@@ -19,6 +22,7 @@ module regfile (
 
     assign rout_1 = registers[raddr_1];
     assign rout_2 = registers[raddr_2];
+    assign userout = registers[userin];
 
     always @(negedge clk) 
     if (wE) registers[waddr] <= wData;
