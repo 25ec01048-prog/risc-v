@@ -1,4 +1,4 @@
-`define INST_ADDR_SIZE 24
+`define INST_ADDR_SIZE 8
 `define INST_SIZE 32
 `define INST_MEM_SIZE 256  
 

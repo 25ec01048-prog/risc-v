@@ -1,10 +1,21 @@
 
 module risc_v(
-    input clk,
-    output [6:0] opCode,
+    input clk100Mhz,
     input [`REG_ADDR_SIZE-1:0] userin,
-    output [5: 0] userout
-);
+
+    output [6:0] opCode,
+    output [`INST_ADDR_SIZE-1:0] c_inst_addr,
+    output reg [6:0] seg,
+    output reg  [3:0] an    
+);  
+
+    wire clk;
+    wire ssdclk;
+    clk_divider #(.countmax( 50000)) cssd (.clk(clk100Mhz), .clkout(ssdclk));
+    clk_divider #(.countmax( 5000000)) cmain (.clk(clk100Mhz), .clkout(clk));
+    
+
+
     reg [`INST_ADDR_SIZE-1:0] inst_addr;
     wire [`INST_SIZE-1:0] instruction;
     wire [`INST_ADDR_SIZE-1:0] inst_addr_o;
@@ -34,8 +45,14 @@ module risc_v(
     reg [2:0] mem_in_type;
 
     wire [`REG_SIZE-1:0] uout;
+    wire [6:0] seg1, seg2, seg3, seg4;
+    reg [3:0] sin1, sin2, sin3, sin4;
     
 
+    bcdtohex ssd1(.seg(seg1), .count(sin1));
+    bcdtohex ssd2(.seg(seg2), .count(sin2));
+    bcdtohex ssd3(.seg(seg3), .count(sin3));
+    bcdtohex ssd4(.seg(seg4), .count(sin4));
     
 
 
@@ -46,7 +63,30 @@ module risc_v(
 
     alu alu1(.alu_sel(alu_sel), .in1(aluin_1), .in2(aluin_2), .oData(alu_out));
     assign opCode[6:0] = instruction[6:0];
-    assign userout[5:0] = uout[5:0];
+    // assign userout[5:0] = uout[5:0];
+
+    assign c_inst_addr  = inst_addr_o;
+
+    always @(*)
+        begin
+            sin1 = uout % 10;
+            sin2 = (uout/ 10) % 10;
+            sin3 = (uout/ 100) % 10;
+            sin4 = (uout/ 1000) % 10;
+        end
+
+    always @(posedge ssdclk)
+        case (an)
+            4'b1110: begin an = 4'b1101; seg = seg2; end
+            4'b1101: begin an = 4'b1011; seg = seg3; end
+            4'b1011: begin an = 4'b0111; seg = seg4; end
+            4'b0111: begin an = 4'b1110; seg = seg1; end
+            default: begin an = 4'b1110; seg = seg1; end
+        endcase
+    
+
+
+
     always @(*)
     begin
         
@@ -106,6 +146,7 @@ module risc_v(
         inst_addr <= inst_addr_o + 4;
         end
     end
+
 
     always @(*)
     begin
@@ -259,9 +300,7 @@ module risc_v(
                 raddr_mem ='bz;
                 waddr_mem =  'bz;
                 waddr = 'bz;
-            end
-
-        
+            end        
         endcase
     end
     
