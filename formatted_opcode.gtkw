@@ -1,0 +1,261 @@
+[*]
+[*] GTKWave Analyzer v3.3.128 (w)1999-2026 BSI
+[*] Tue Nov 24 07:52:04 2026
+[*]
+[dumpfile] "C:\Users\tulad\study\riscv_version\risc-v\tb_.vcd"
+[dumpfile_mtime] "Tue Nov 24 07:41:52 2026"
+[dumpfile_size] 14026
+[savefile] "C:\Users\tulad\study\riscv_version\risc-v\formatted_opcode.gtkw"
+[timestart] 0
+[size] 1920 962
+[pos] -1 -1
+*-4.000000 48 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb_.
+[treeopen] tb_.rs1.
+[sst_width] 246
+[signals_width] 342
+[sst_expanded] 1
+[sst_vpaned_height] 378
+@29
+tb_.rs1.clk
+@22
+[color] 5
+tb_.rs1.inst_addr_o[23:0]
+@c00022
+[color] 5
+tb_.rs1.instruction[31:0]
+@28
+[color] 5
+(0)tb_.rs1.instruction[31:0]
+[color] 5
+(1)tb_.rs1.instruction[31:0]
+[color] 5
+(2)tb_.rs1.instruction[31:0]
+[color] 5
+(3)tb_.rs1.instruction[31:0]
+[color] 5
+(4)tb_.rs1.instruction[31:0]
+[color] 5
+(5)tb_.rs1.instruction[31:0]
+[color] 5
+(6)tb_.rs1.instruction[31:0]
+[color] 5
+(7)tb_.rs1.instruction[31:0]
+[color] 5
+(8)tb_.rs1.instruction[31:0]
+[color] 5
+(9)tb_.rs1.instruction[31:0]
+[color] 5
+(10)tb_.rs1.instruction[31:0]
+[color] 5
+(11)tb_.rs1.instruction[31:0]
+[color] 5
+(12)tb_.rs1.instruction[31:0]
+[color] 5
+(13)tb_.rs1.instruction[31:0]
+[color] 5
+(14)tb_.rs1.instruction[31:0]
+[color] 5
+(15)tb_.rs1.instruction[31:0]
+[color] 5
+(16)tb_.rs1.instruction[31:0]
+[color] 5
+(17)tb_.rs1.instruction[31:0]
+[color] 5
+(18)tb_.rs1.instruction[31:0]
+[color] 5
+(19)tb_.rs1.instruction[31:0]
+[color] 5
+(20)tb_.rs1.instruction[31:0]
+[color] 5
+(21)tb_.rs1.instruction[31:0]
+[color] 5
+(22)tb_.rs1.instruction[31:0]
+[color] 5
+(23)tb_.rs1.instruction[31:0]
+[color] 5
+(24)tb_.rs1.instruction[31:0]
+[color] 5
+(25)tb_.rs1.instruction[31:0]
+[color] 5
+(26)tb_.rs1.instruction[31:0]
+[color] 5
+(27)tb_.rs1.instruction[31:0]
+[color] 5
+(28)tb_.rs1.instruction[31:0]
+[color] 5
+(29)tb_.rs1.instruction[31:0]
+[color] 5
+(30)tb_.rs1.instruction[31:0]
+[color] 5
+(31)tb_.rs1.instruction[31:0]
+@1401200
+-group_end
+@c00022
+[color] 5
+#{opcode} (25)tb_.rs1.instruction[31:0] (26)tb_.rs1.instruction[31:0] (27)tb_.rs1.instruction[31:0] (28)tb_.rs1.instruction[31:0] (29)tb_.rs1.instruction[31:0] (30)tb_.rs1.instruction[31:0] (31)tb_.rs1.instruction[31:0]
+@28
+[color] 5
+(25)tb_.rs1.instruction[31:0]
+[color] 5
+(26)tb_.rs1.instruction[31:0]
+[color] 5
+(27)tb_.rs1.instruction[31:0]
+[color] 5
+(28)tb_.rs1.instruction[31:0]
+[color] 5
+(29)tb_.rs1.instruction[31:0]
+[color] 5
+(30)tb_.rs1.instruction[31:0]
+[color] 5
+(31)tb_.rs1.instruction[31:0]
+@1401200
+-group_end
+@200
+-
+-
+-
+@22
+tb_.rs1.jal_offset[23:0]
+@420
+tb_.rs1.extended_immediate[31:0]
+@c00022
+tb_.rs1.branch_offset[23:0]
+@28
+(0)tb_.rs1.branch_offset[23:0]
+(1)tb_.rs1.branch_offset[23:0]
+(2)tb_.rs1.branch_offset[23:0]
+(3)tb_.rs1.branch_offset[23:0]
+(4)tb_.rs1.branch_offset[23:0]
+(5)tb_.rs1.branch_offset[23:0]
+(6)tb_.rs1.branch_offset[23:0]
+(7)tb_.rs1.branch_offset[23:0]
+(8)tb_.rs1.branch_offset[23:0]
+(9)tb_.rs1.branch_offset[23:0]
+(10)tb_.rs1.branch_offset[23:0]
+(11)tb_.rs1.branch_offset[23:0]
+(12)tb_.rs1.branch_offset[23:0]
+(13)tb_.rs1.branch_offset[23:0]
+(14)tb_.rs1.branch_offset[23:0]
+(15)tb_.rs1.branch_offset[23:0]
+(16)tb_.rs1.branch_offset[23:0]
+(17)tb_.rs1.branch_offset[23:0]
+(18)tb_.rs1.branch_offset[23:0]
+(19)tb_.rs1.branch_offset[23:0]
+(20)tb_.rs1.branch_offset[23:0]
+(21)tb_.rs1.branch_offset[23:0]
+(22)tb_.rs1.branch_offset[23:0]
+(23)tb_.rs1.branch_offset[23:0]
+@1401200
+-group_end
+@200
+-
+-
+@22
+[color] 4
+tb_.rs1.raddr_1[4:0]
+[color] 4
+tb_.rs1.raddr_2[4:0]
+[color] 4
+tb_.rs1.regout_1[31:0]
+[color] 4
+tb_.rs1.regout_2[31:0]
+[color] 4
+tb_.rs1.waddr[4:0]
+@28
+tb_.rs1.wE_REG
+@22
+[color] 4
+tb_.rs1.wData[31:0]
+@200
+-
+@22
+[color] 2
+tb_.rs1.alu_sel[3:0]
+@c00022
+[color] 2
+tb_.rs1.aluin_1[31:0]
+@28
+[color] 2
+(0)tb_.rs1.aluin_1[31:0]
+[color] 2
+(1)tb_.rs1.aluin_1[31:0]
+[color] 2
+(2)tb_.rs1.aluin_1[31:0]
+[color] 2
+(3)tb_.rs1.aluin_1[31:0]
+[color] 2
+(4)tb_.rs1.aluin_1[31:0]
+[color] 2
+(5)tb_.rs1.aluin_1[31:0]
+[color] 2
+(6)tb_.rs1.aluin_1[31:0]
+[color] 2
+(7)tb_.rs1.aluin_1[31:0]
+[color] 2
+(8)tb_.rs1.aluin_1[31:0]
+[color] 2
+(9)tb_.rs1.aluin_1[31:0]
+[color] 2
+(10)tb_.rs1.aluin_1[31:0]
+[color] 2
+(11)tb_.rs1.aluin_1[31:0]
+[color] 2
+(12)tb_.rs1.aluin_1[31:0]
+[color] 2
+(13)tb_.rs1.aluin_1[31:0]
+[color] 2
+(14)tb_.rs1.aluin_1[31:0]
+[color] 2
+(15)tb_.rs1.aluin_1[31:0]
+[color] 2
+(16)tb_.rs1.aluin_1[31:0]
+[color] 2
+(17)tb_.rs1.aluin_1[31:0]
+[color] 2
+(18)tb_.rs1.aluin_1[31:0]
+[color] 2
+(19)tb_.rs1.aluin_1[31:0]
+[color] 2
+(20)tb_.rs1.aluin_1[31:0]
+[color] 2
+(21)tb_.rs1.aluin_1[31:0]
+[color] 2
+(22)tb_.rs1.aluin_1[31:0]
+[color] 2
+(23)tb_.rs1.aluin_1[31:0]
+[color] 2
+(24)tb_.rs1.aluin_1[31:0]
+[color] 2
+(25)tb_.rs1.aluin_1[31:0]
+[color] 2
+(26)tb_.rs1.aluin_1[31:0]
+[color] 2
+(27)tb_.rs1.aluin_1[31:0]
+[color] 2
+(28)tb_.rs1.aluin_1[31:0]
+[color] 2
+(29)tb_.rs1.aluin_1[31:0]
+[color] 2
+(30)tb_.rs1.aluin_1[31:0]
+[color] 2
+(31)tb_.rs1.aluin_1[31:0]
+@1401200
+-group_end
+@22
+[color] 2
+tb_.rs1.aluin_2[31:0]
+[color] 2
+tb_.rs1.alu_out[31:0]
+@200
+-
+@22
+tb_.rs1.raddr_mem[11:0]
+tb_.rs1.mem_out[31:0]
+@28
+tb_.rs1.mem_in_type[2:0]
+tb_.rs1.wE_MEM
+@22
+tb_.rs1.mem_in[31:0]
+[pattern_trace] 1
+[pattern_trace] 0

@@ -1,29 +1,119 @@
 [*]
 [*] GTKWave Analyzer v3.3.128 (w)1999-2026 BSI
-[*] Mon Nov  9 08:20:48 2026
+[*] Tue Nov 24 07:59:30 2026
 [*]
-[dumpfile] "C:\Users\tulad\study\risc-v\tb_.vcd"
-[dumpfile_mtime] "Mon Nov  9 08:20:02 2026"
-[dumpfile_size] 4515
-[savefile] "C:\Users\tulad\study\risc-v\formatted.gtkw"
-[timestart] 18
-[size] 1920 962
-[pos] -1 -1
-*-3.058894 48 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[dumpfile] "C:\Users\tulad\study\riscv_version\risc-v\tb_.vcd"
+[dumpfile_mtime] "Tue Nov 24 07:41:52 2026"
+[dumpfile_size] 14026
+[savefile] "C:\Users\tulad\study\riscv_version\risc-v\formatted.gtkw"
+[timestart] 0
+[size] 1920 985
+[pos] -27 -24
+*-4.000000 48 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] tb_.
 [treeopen] tb_.rs1.
 [sst_width] 246
-[signals_width] 265
+[signals_width] 275
 [sst_expanded] 1
-[sst_vpaned_height] 378
+[sst_vpaned_height] 389
 @28
 tb_.rs1.clk
 @22
 [color] 5
 tb_.rs1.inst_addr_o[23:0]
+@c00022
 [color] 5
 tb_.rs1.instruction[31:0]
+@28
+[color] 5
+(0)tb_.rs1.instruction[31:0]
+[color] 5
+(1)tb_.rs1.instruction[31:0]
+[color] 5
+(2)tb_.rs1.instruction[31:0]
+[color] 5
+(3)tb_.rs1.instruction[31:0]
+[color] 5
+(4)tb_.rs1.instruction[31:0]
+[color] 5
+(5)tb_.rs1.instruction[31:0]
+[color] 5
+(6)tb_.rs1.instruction[31:0]
+[color] 5
+(7)tb_.rs1.instruction[31:0]
+[color] 5
+(8)tb_.rs1.instruction[31:0]
+[color] 5
+(9)tb_.rs1.instruction[31:0]
+[color] 5
+(10)tb_.rs1.instruction[31:0]
+[color] 5
+(11)tb_.rs1.instruction[31:0]
+[color] 5
+(12)tb_.rs1.instruction[31:0]
+[color] 5
+(13)tb_.rs1.instruction[31:0]
+[color] 5
+(14)tb_.rs1.instruction[31:0]
+[color] 5
+(15)tb_.rs1.instruction[31:0]
+[color] 5
+(16)tb_.rs1.instruction[31:0]
+[color] 5
+(17)tb_.rs1.instruction[31:0]
+[color] 5
+(18)tb_.rs1.instruction[31:0]
+[color] 5
+(19)tb_.rs1.instruction[31:0]
+[color] 5
+(20)tb_.rs1.instruction[31:0]
+[color] 5
+(21)tb_.rs1.instruction[31:0]
+[color] 5
+(22)tb_.rs1.instruction[31:0]
+[color] 5
+(23)tb_.rs1.instruction[31:0]
+[color] 5
+(24)tb_.rs1.instruction[31:0]
+[color] 5
+(25)tb_.rs1.instruction[31:0]
+[color] 5
+(26)tb_.rs1.instruction[31:0]
+[color] 5
+(27)tb_.rs1.instruction[31:0]
+[color] 5
+(28)tb_.rs1.instruction[31:0]
+[color] 5
+(29)tb_.rs1.instruction[31:0]
+[color] 5
+(30)tb_.rs1.instruction[31:0]
+[color] 5
+(31)tb_.rs1.instruction[31:0]
+@1401200
+-group_end
+@c00023
+[color] 5
+#{opcode} (25)tb_.rs1.instruction[31:0] (26)tb_.rs1.instruction[31:0] (27)tb_.rs1.instruction[31:0] (28)tb_.rs1.instruction[31:0] (29)tb_.rs1.instruction[31:0] (30)tb_.rs1.instruction[31:0] (31)tb_.rs1.instruction[31:0]
+@29
+[color] 5
+(25)tb_.rs1.instruction[31:0]
+[color] 5
+(26)tb_.rs1.instruction[31:0]
+[color] 5
+(27)tb_.rs1.instruction[31:0]
+[color] 5
+(28)tb_.rs1.instruction[31:0]
+[color] 5
+(29)tb_.rs1.instruction[31:0]
+[color] 5
+(30)tb_.rs1.instruction[31:0]
+[color] 5
+(31)tb_.rs1.instruction[31:0]
+@1401201
+-group_end
 @200
+-
+-
 -
 @22
 tb_.rs1.jal_offset[23:0]
@@ -58,9 +148,8 @@ tb_.rs1.branch_offset[23:0]
 (23)tb_.rs1.branch_offset[23:0]
 @1401200
 -group_end
-@201
--
 @200
+-
 -
 @22
 [color] 4
