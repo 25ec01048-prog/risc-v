@@ -2,11 +2,12 @@
 module risc_v(
     input clk100Mhz,
     input [`REG_ADDR_SIZE-1:0] userin,
-
+    input rst,
     output [6:0] opCode,
     output [`INST_ADDR_SIZE-1:0] c_inst_addr,
     output reg [6:0] seg,
-    output reg  [3:0] an    
+    output reg  [3:0] an
+        
 );  
 
     wire clk;
@@ -89,7 +90,8 @@ module risc_v(
 
     always @(*)
     begin
-        
+        if (rst) inst_addr<=0;
+        else begin
         if (instruction[6:0] == 7'b`branch_op)
         begin
              if (alu_out) inst_addr <= inst_addr_o + branch_offset;
@@ -145,6 +147,7 @@ module risc_v(
             
         inst_addr <= inst_addr_o + 4;
         end
+    end
     end
 
 
@@ -243,7 +246,7 @@ module risc_v(
         begin
             wE_REG = 1;
             waddr = instruction[11:7];
-            wData = (instruction[31:20] << 12) + inst_addr_o;
+            wData = (instruction[31:12] << 12) + inst_addr_o;
         end
 
         7'b`branch_op:

@@ -39,7 +39,7 @@ module inst_mem(
         put_inst(32, 32'h004181B3);
         put_inst(36, 32'h00108093);
         put_inst(40, 32'hFE1152E3);
-        put_inst(44, 32'h0000006F);
+        put_inst(44, 32'hFD5FF3EF);
     end
 
 endmodule
