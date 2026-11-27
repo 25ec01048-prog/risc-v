@@ -1,19 +1,19 @@
 [*]
 [*] GTKWave Analyzer v3.3.128 (w)1999-2026 BSI
-[*] Tue Nov 24 07:59:30 2026
+[*] Fri Nov 27 14:02:34 2026
 [*]
-[dumpfile] "C:\Users\tulad\study\riscv_version\risc-v\tb_.vcd"
-[dumpfile_mtime] "Tue Nov 24 07:41:52 2026"
-[dumpfile_size] 14026
-[savefile] "C:\Users\tulad\study\riscv_version\risc-v\formatted.gtkw"
+[dumpfile] "C:\Users\tulad\study\risc-v\tb_.vcd"
+[dumpfile_mtime] "Fri Nov 27 14:01:17 2026"
+[dumpfile_size] 18998
+[savefile] "C:\Users\tulad\study\risc-v\formatted.gtkw"
 [timestart] 0
-[size] 1920 985
-[pos] -27 -24
+[size] 1920 962
+[pos] -1 -1
 *-4.000000 48 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] tb_.
 [treeopen] tb_.rs1.
 [sst_width] 246
-[signals_width] 275
+[signals_width] 400
 [sst_expanded] 1
 [sst_vpaned_height] 389
 @28
@@ -91,10 +91,10 @@ tb_.rs1.instruction[31:0]
 (31)tb_.rs1.instruction[31:0]
 @1401200
 -group_end
-@c00023
+@c00025
 [color] 5
 #{opcode} (25)tb_.rs1.instruction[31:0] (26)tb_.rs1.instruction[31:0] (27)tb_.rs1.instruction[31:0] (28)tb_.rs1.instruction[31:0] (29)tb_.rs1.instruction[31:0] (30)tb_.rs1.instruction[31:0] (31)tb_.rs1.instruction[31:0]
-@29
+@28
 [color] 5
 (25)tb_.rs1.instruction[31:0]
 [color] 5
@@ -109,7 +109,7 @@ tb_.rs1.instruction[31:0]
 (30)tb_.rs1.instruction[31:0]
 [color] 5
 (31)tb_.rs1.instruction[31:0]
-@1401201
+@1401205
 -group_end
 @200
 -
