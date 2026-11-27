@@ -11,12 +11,12 @@ module alu (
         case (alu_sel)
             4'd0: oData = in1 + in2;
             4'b1000: oData = in1 - in2;
-            4'b0001: oData = in1 << in2;
+            4'b0001: oData = in1 << in2[4:0];
             4'b0010: oData = ($signed(in1) < $signed(in2));
             4'b0011: oData = ($unsigned(in1) < $unsigned(in2));
             4'b0100: oData = in1 ^ in2;
             4'b0101: oData = in1 >> in2;
-            4'b1101: oData =   $signed(in1) >>> in2;
+            4'b1101: oData =   $signed(in1) >>> in2[4:0];
             4'b0110: oData = in1 | in2;
             4'b0111: oData = in1 & in2;
 

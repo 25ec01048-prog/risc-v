@@ -159,6 +159,8 @@ module risc_v(
                 wE_MEM = 0;
                 mem_in = 0;
                 wE_REG = 1;
+
+
                 alu_sel = {instruction[30], instruction[14:12]};
                 raddr_2 = instruction[24:20];
                 raddr_1 = instruction[19:15];
@@ -238,6 +240,7 @@ module risc_v(
         7'b`LUI_op:
         begin
             wE_REG = 1;
+            wE_MEM = 0;
             waddr = instruction[11:7];
             wData = {instruction[31:12], 12'b0};
         end
@@ -245,12 +248,15 @@ module risc_v(
         7'b`AUIPIC_op:
         begin
             wE_REG = 1;
+            wE_MEM = 0;
             waddr = instruction[11:7];
             wData = (instruction[31:12] << 12) + inst_addr_o;
         end
 
         7'b`branch_op:
         begin
+            wE_MEM = 0;
+            wE_REG = 0;
             branch_offset = $signed({instruction[31], instruction[7],instruction[30:25],instruction[11:8],1'b0});
             raddr_2 = instruction[24:20];
             raddr_1 = instruction[19:15];
@@ -270,6 +276,7 @@ module risc_v(
 
         7'b`JAL_op:
         begin
+            wE_MEM = 0;
             wE_REG = 1;
                 waddr = instruction[11:7];
                 wData = inst_addr_o + 4;
@@ -278,6 +285,7 @@ module risc_v(
         
         7'b`JALR_op:
         begin
+            wE_MEM = 0;
             raddr_1 = instruction[19:15];
             wE_REG = 1;
             waddr = instruction[11:7];
